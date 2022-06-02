@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ssg.com.sellercommerce.web.CommercialCreateDto;
+import ssg.com.sellercommerce.web.CommercialDisplayDto;
 
 @Slf4j
 @RestController
@@ -19,8 +20,8 @@ public class CommercialController {
     }
 
     @GetMapping // 광고전시
-    public ResponseEntity display() {
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity<CommercialDisplayDto> display() {
+        return new ResponseEntity(CommercialDisplayDto.createByEntity(null), HttpStatus.OK);
     }
 
     @PostMapping // 광고입찰
