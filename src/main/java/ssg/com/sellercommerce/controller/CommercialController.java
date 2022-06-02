@@ -4,9 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ssg.com.sellercommerce.exception.IllegalRequestException;
 import ssg.com.sellercommerce.web.CommercialCreateDto;
 import ssg.com.sellercommerce.web.CommercialDisplayDto;
+
+import javax.validation.Valid;
 
 @Slf4j
 @RestController
@@ -25,7 +29,10 @@ public class CommercialController {
     }
 
     @PostMapping // 광고입찰
-    public ResponseEntity createBid(CommercialCreateDto commercialCreateDto) {
+    public ResponseEntity createBid(@Valid @RequestBody CommercialCreateDto commercialCreateDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new IllegalRequestException(bindingResult.getFieldError().getDefaultMessage());
+        }
         return new ResponseEntity(HttpStatus.OK);
     }
 }

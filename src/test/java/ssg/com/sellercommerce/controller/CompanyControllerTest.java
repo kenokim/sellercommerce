@@ -33,7 +33,7 @@ class CompanyControllerTest {
     public void CompanyCreate_ValidInput_ReturnsOK(Long businessNumber) throws Exception {
         this.mockMvc.perform(post("/company")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(CompanyCreateDto.createDto(validCompanyName, businessNumber, validPhoneNumber, validAddress))))
+                        .content(objectMapper.writeValueAsString(CompanyCreateDto.of(validCompanyName, businessNumber, validPhoneNumber, validAddress))))
                 .andExpect(status().isOk());
     }
 
@@ -42,7 +42,7 @@ class CompanyControllerTest {
     public void CompanyCreate_ValidInput2_ReturnsOK(String phoneNumber) throws Exception {
         this.mockMvc.perform(post("/company")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(CompanyCreateDto.createDto(validCompanyName, validBusinessNumber, phoneNumber, validAddress))))
+                        .content(objectMapper.writeValueAsString(CompanyCreateDto.of(validCompanyName, validBusinessNumber, phoneNumber, validAddress))))
                 .andExpect(status().isOk());
     }
 
@@ -52,7 +52,7 @@ class CompanyControllerTest {
     public void CompanyCreate_InvalidBusinessNumber_ReturnsBadRequest(Long businessNumber) throws Exception {
         this.mockMvc.perform(post("/company")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(CompanyCreateDto.createDto(validCompanyName, businessNumber, validPhoneNumber, validAddress))))
+                        .content(objectMapper.writeValueAsString(CompanyCreateDto.of(validCompanyName, businessNumber, validPhoneNumber, validAddress))))
                 .andExpect(status().isBadRequest());
     }
 
@@ -61,7 +61,7 @@ class CompanyControllerTest {
     public void CompanyCreate_InvalidPhoneNumber_ReturnsBadRequest(String phoneNumber) throws Exception {
         this.mockMvc.perform(post("/company")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(CompanyCreateDto.createDto(validCompanyName, validBusinessNumber, phoneNumber, validAddress))))
+                        .content(objectMapper.writeValueAsString(CompanyCreateDto.of(validCompanyName, validBusinessNumber, phoneNumber, validAddress))))
                 .andExpect(status().isBadRequest());
     }
 

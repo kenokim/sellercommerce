@@ -21,7 +21,7 @@ public class CompanyCreateDto {
 
     }
 
-    public static CompanyCreateDto createDto(String name, Long businessNumber, String phoneNumber, String address) {
+    public static CompanyCreateDto of(String name, Long businessNumber, String phoneNumber, String address) {
         CompanyCreateDto dto = new CompanyCreateDto();
         dto.name = name;
         dto.businessNumber = businessNumber;
