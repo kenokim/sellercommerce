@@ -1,12 +1,20 @@
 package ssg.com.sellercommerce.web;
 
 import lombok.Data;
+import ssg.com.sellercommerce.utils.validator.DecimalConstraint;
+import ssg.com.sellercommerce.utils.validator.PhoneNumberConstraint;
+
 
 @Data
 public class CompanyCreateDto {
     private String name;
+
+    @DecimalConstraint
     private Long businessNumber;
+
+    @PhoneNumberConstraint
     private String phoneNumber;
+
     private String address;
 
     private CompanyCreateDto() {
