@@ -14,9 +14,9 @@ public class Company {
     private String companyName;
 
     @NotNull @Column(length = 10)
-    private Integer businessNumber;
+    private Long businessNumber;
 
-    private String phoneNumber;
+    private Integer phoneNumber;
 
     private String address;
 }

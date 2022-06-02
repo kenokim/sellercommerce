@@ -19,6 +19,6 @@ public class Commercial {
     private Item item;
 
     @NotNull
-    private Integer price;
+    private Integer bid;
 
 }
