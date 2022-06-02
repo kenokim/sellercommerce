@@ -16,8 +16,6 @@ public class PhoneNumberValidator implements ConstraintValidator<PhoneNumberCons
             return number > 100000000L && number < 1000000000L;
         } catch (Exception e) {
             return false;
-        } finally {
-            return true;
         }
     }
 }

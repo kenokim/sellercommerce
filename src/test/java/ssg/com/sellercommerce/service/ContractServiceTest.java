@@ -39,6 +39,8 @@ public class ContractServiceTest {
 
     private Long companyId;
 
+    private final Long contractId = 100000000L;
+
     @BeforeEach
     public void setup() {
         Company company = Company.create(companyName, businessNumber, phoneNumber, address);
@@ -48,6 +50,8 @@ public class ContractServiceTest {
         LocalDateTime endAt = startAt.plusYears(1);
         Contract contract = Contract.create(company, startAt, endAt);
         contractRepository.save(contract);
+        when(contractService.createContract(companyId))
+                .thenReturn(contractId);
     }
 
     @Test
