@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ssg.com.sellercommerce.domain.Item;
 import ssg.com.sellercommerce.repository.ItemRepository;
+import ssg.com.sellercommerce.service.CompanyService;
 
 @Component
 @Transactional
@@ -13,10 +14,11 @@ import ssg.com.sellercommerce.repository.ItemRepository;
 public class DataGenerator implements CommandLineRunner {
 
     private final ItemRepository itemRepository;
-
+    private final CompanyService companyService;
     @Override
     public void run(String... args) throws Exception {
         generateItems();
+        generateCompany();
     }
 
     private void generateItems() {
@@ -45,5 +47,10 @@ public class DataGenerator implements CommandLineRunner {
     private void saveItem(String companyName, String itemName, int price, int stockQuantity) {
         Item item = Item.createItem(companyName, itemName, price, stockQuantity);
         itemRepository.save(item);
+    }
+
+    private void generateCompany() {
+        companyService.register("이상해씨샵", 100000000L, 1012345678L, "이상해씨 집");
+        companyService.register("삼성전자", 100000008L, 1012345679L, "삼성");
     }
 }
