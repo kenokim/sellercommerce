@@ -1,10 +1,11 @@
 package ssg.com.sellercommerce.domain;
 
 import com.sun.istack.NotNull;
+import lombok.Getter;
 
 import javax.persistence.*;
 
-@Entity
+@Entity @Getter
 @SequenceGenerator(
         name = "DECIMAL_SEQ_GENERATOR",
         sequenceName = "DECIMAL_SEQ",

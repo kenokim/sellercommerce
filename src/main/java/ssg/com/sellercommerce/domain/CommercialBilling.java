@@ -1,11 +1,12 @@
 package ssg.com.sellercommerce.domain;
 
 import com.sun.istack.NotNull;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
+@Entity @Getter
 @SequenceGenerator(
         name = "DECIMAL_SEQ_GENERATOR",
         sequenceName = "DECIMAL_SEQ",
@@ -23,5 +24,15 @@ public class CommercialBilling {
     private LocalDateTime clickedAt;
 
     @NotNull
-    private Integer price;
+    private Integer bid;
+
+    protected CommercialBilling() {}
+
+    public static CommercialBilling create(Commercial commercial, LocalDateTime clickedAt, Integer bid) {
+        CommercialBilling billing = new CommercialBilling();
+        billing.commercial = commercial;
+        billing.bid = bid;
+        billing.clickedAt = clickedAt;
+        return billing;
+    }
 }

@@ -12,4 +12,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     Integer countAllByCompanyName(String companyName);
 
     List<Item> findAllByCompanyName(String companyName);
+
+    Optional<Item> findByItemId(Long itemId);
 }
