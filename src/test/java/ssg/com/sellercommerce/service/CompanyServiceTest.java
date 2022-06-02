@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.transaction.annotation.Transactional;
+import ssg.com.sellercommerce.exception.IllegalRequestException;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,4 +29,12 @@ class CompanyServiceTest {
                 .thenReturn(true);
         assertThat(companyService.register(companyName, businessNumber, phoneNumber, address)).isGreaterThan(1000000000L).isNotNull();
     }
+
+    @Test
+    public void CreateCompany_Fail() {
+        when(itemService.isValidCompanyName(companyName))
+                .thenReturn(false);
+        assertThrows(IllegalRequestException.class, () -> companyService.register(companyName, businessNumber, phoneNumber, address));
+    }
+
 }
