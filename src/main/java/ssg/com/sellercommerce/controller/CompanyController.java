@@ -16,6 +16,6 @@ import ssg.com.sellercommerce.web.CompanyCreateDto;
 public class CompanyController {
     @PostMapping // 업체생성
     public ResponseEntity register(CompanyCreateDto companyCreateDto) {
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity("Successfully created", HttpStatus.OK);
     }
 }

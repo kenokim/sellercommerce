@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class CommercialCreateDto {
+
     private Long companyId;
     private Long itemId;
     private Integer bid;
