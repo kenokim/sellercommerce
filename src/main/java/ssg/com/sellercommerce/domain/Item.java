@@ -5,8 +5,13 @@ import com.sun.istack.NotNull;
 import javax.persistence.*;
 
 @Entity
+@SequenceGenerator(
+        name = "DECIMAL_SEQ_GENERATOR",
+        sequenceName = "DECIMAL_SEQ",
+        initialValue = 1000000000
+)
 public class Item {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DECIMAL_SEQ_GENERATOR")
     @Column(name = "item_id", length = 10)
     private Long id;
 

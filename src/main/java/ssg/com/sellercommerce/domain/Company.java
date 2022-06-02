@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 public class Company {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DECIMAL_SEQ_GENERATOR")
     @Column(name = "company_id", length = 10)
     private Long id;
 

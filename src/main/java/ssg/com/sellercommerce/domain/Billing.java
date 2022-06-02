@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Billing {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DECIMAL_SEQ_GENERATOR")
     @Column(name = "billing_id", length = 10)
     private Long id;
 
