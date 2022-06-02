@@ -1,17 +1,22 @@
 package ssg.com.sellercommerce.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import ssg.com.sellercommerce.service.CompanyService;
 import ssg.com.sellercommerce.web.CompanyCreateDto;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -22,18 +27,27 @@ class CompanyControllerTest {
     @Autowired private MockMvc mockMvc;
     @Autowired private ObjectMapper objectMapper;
 
-    private final Long validBusinessNumber = 1000000000L;
-    private final String validCompanyName = "hello";
-    private final String validPhoneNumber = "01012345678";
-    private final String validAddress = "Hello";
+    @MockBean private CompanyService companyService;
 
+    private final Long companyId = 1000000000L;
+    private final Long businessNumber = 1000000000L;
+    private final String companyName = "hello";
+    private final String phoneNumber = "01012345678";
+    private final String address = "Hello";
+
+
+    @BeforeEach
+    public void setup() {
+        when(companyService.register(companyName, businessNumber, Long.parseLong(phoneNumber), address))
+                .thenReturn(companyId);
+    }
 
     @ParameterizedTest
     @ValueSource(longs = { 1000000000L, 3000000000L })
     public void CompanyCreate_ValidInput_ReturnsOK(Long businessNumber) throws Exception {
         this.mockMvc.perform(post("/company")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(CompanyCreateDto.of(validCompanyName, businessNumber, validPhoneNumber, validAddress))))
+                        .content(objectMapper.writeValueAsString(CompanyCreateDto.of(companyName, businessNumber, phoneNumber, address))))
                 .andExpect(status().isOk());
     }
 
@@ -42,7 +56,7 @@ class CompanyControllerTest {
     public void CompanyCreate_ValidInput2_ReturnsOK(String phoneNumber) throws Exception {
         this.mockMvc.perform(post("/company")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(CompanyCreateDto.of(validCompanyName, validBusinessNumber, phoneNumber, validAddress))))
+                        .content(objectMapper.writeValueAsString(CompanyCreateDto.of(companyName, businessNumber, phoneNumber, address))))
                 .andExpect(status().isOk());
     }
 
@@ -52,7 +66,7 @@ class CompanyControllerTest {
     public void CompanyCreate_InvalidBusinessNumber_ReturnsBadRequest(Long businessNumber) throws Exception {
         this.mockMvc.perform(post("/company")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(CompanyCreateDto.of(validCompanyName, businessNumber, validPhoneNumber, validAddress))))
+                        .content(objectMapper.writeValueAsString(CompanyCreateDto.of(companyName, businessNumber, phoneNumber, address))))
                 .andExpect(status().isBadRequest());
     }
 
@@ -61,7 +75,7 @@ class CompanyControllerTest {
     public void CompanyCreate_InvalidPhoneNumber_ReturnsBadRequest(String phoneNumber) throws Exception {
         this.mockMvc.perform(post("/company")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(CompanyCreateDto.of(validCompanyName, validBusinessNumber, phoneNumber, validAddress))))
+                        .content(objectMapper.writeValueAsString(CompanyCreateDto.of(companyName, businessNumber, phoneNumber, address))))
                 .andExpect(status().isBadRequest());
     }
 
