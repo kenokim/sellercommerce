@@ -13,7 +13,9 @@ import ssg.com.sellercommerce.repository.CompanyRepository;
 import ssg.com.sellercommerce.repository.ContractRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
@@ -41,13 +43,14 @@ public class ContractServiceTest {
 
     private final Long contractId = 100000000L;
 
+    private final LocalDateTime startAt = LocalDateTime.of(2022, 06, 02, 19, 11);
+    private final LocalDateTime endAt = startAt.plusYears(1);
+
     @BeforeEach
     public void setup() {
         Company company = Company.create(companyName, businessNumber, phoneNumber, address);
         companyRepository.save(company);
         this.companyId = company.getId();
-        LocalDateTime startAt = LocalDateTime.of(2022, 06, 02, 19, 11);
-        LocalDateTime endAt = startAt.plusYears(1);
         Contract contract = Contract.create(company, startAt, endAt);
         contractRepository.save(contract);
         when(contractService.createContract(companyId))
@@ -60,4 +63,17 @@ public class ContractServiceTest {
         assertThrows(IllegalRequestException.class, () -> contractService.createContract(companyId, startAt, startAt.plusYears(1)));
     }
 
+    @Test
+    public void FindByContractTerm_Success() {
+        LocalDateTime now = startAt.plusDays(1);
+        List<Contract> contracts = contractService.findByCompanyIdWhereContractTermValid(companyId, now);
+        assertThat(contracts.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void FindByContractTerm_Empty() {
+        LocalDateTime now = startAt.minusYears(1);
+        List<Contract> contracts = contractService.findByCompanyIdWhereContractTermValid(companyId, now);
+        assertThat(contracts.size()).isEqualTo(0);
+    }
 }
