@@ -23,4 +23,8 @@ public class ItemService {
     public Boolean isValidCompanyName(String companyName) {
         return itemRepository.countAllByCompanyName(companyName) != 0;
     }
+
+    public Item findByIdOrThrow(Long itemId) {
+        return itemRepository.findByItemId(itemId).orElseThrow(() -> new IllegalRequestException("존재하지 않는 상품입니다."));
+    }
 }

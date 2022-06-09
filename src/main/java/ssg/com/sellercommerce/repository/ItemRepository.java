@@ -1,6 +1,7 @@
 package ssg.com.sellercommerce.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import ssg.com.sellercommerce.domain.Item;
 
 import java.util.List;
@@ -12,4 +13,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     Integer countAllByCompanyName(String companyName);
 
     List<Item> findAllByCompanyName(String companyName);
+
+    @Query("select i from Item as i")
+    Optional<Item> findByItemId(Long itemId);
 }

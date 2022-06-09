@@ -10,6 +10,7 @@ import ssg.com.sellercommerce.repository.ContractRepository;
 
 import java.time.LocalDateTime;
 import java.time.Year;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -37,5 +38,14 @@ public class ContractService {
         Contract contract = Contract.create(company, startAt, endAt);
         contractRepository.save(contract);
         return contract.getId();
+    }
+
+    public List<Contract> findByCompanyIdWhereContractTermValid(Long companyId, LocalDateTime now) {
+        return contractRepository.findAllByCompanyIdAndStartAtBeforeNowAndEndAtAfterNow(companyId, now);
+    }
+
+    public List<Contract> findByCompanyIdWhereContractTermValid(Long companyId) {
+        LocalDateTime now = LocalDateTime.now();
+        return findByCompanyIdWhereContractTermValid(companyId, now);
     }
 }

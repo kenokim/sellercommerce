@@ -1,10 +1,11 @@
 package ssg.com.sellercommerce.domain;
 
 import com.sun.istack.NotNull;
+import lombok.Getter;
 
 import javax.persistence.*;
 
-@Entity
+@Entity @Getter
 @SequenceGenerator(
         name = "DECIMAL_SEQ_GENERATOR",
         sequenceName = "DECIMAL_SEQ",
@@ -26,4 +27,12 @@ public class Commercial {
     @NotNull
     private Integer bid;
 
+    protected Commercial() {}
+    public static Commercial create(Company company, Item item, Integer bid) {
+        Commercial commercial = new Commercial();
+        commercial.company = company;
+        commercial.item = item;
+        commercial.bid = bid;
+        return commercial;
+    }
 }
