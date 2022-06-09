@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ssg.com.sellercommerce.exception.IllegalRequestException;
+import ssg.com.sellercommerce.service.CompanyService;
 import ssg.com.sellercommerce.web.CompanyCreateDto;
 
 import javax.validation.Valid;
@@ -19,11 +20,13 @@ import javax.validation.Valid;
 @RequestMapping("/company")
 @RequiredArgsConstructor
 public class CompanyController {
+    private final CompanyService companyService;
     @PostMapping // 업체생성
-    public ResponseEntity register(@Valid @RequestBody CompanyCreateDto companyCreateDto, BindingResult bindingResult) {
+    public ResponseEntity register(@Valid @RequestBody CompanyCreateDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new IllegalRequestException(bindingResult.getFieldError().getDefaultMessage());
         }
-        return new ResponseEntity("Successfully created", HttpStatus.OK);
+        Long companyId = companyService.register(dto.getName(), dto.getBusinessNumber(), dto.getPhoneNumber(), dto.getAddress());
+        return new ResponseEntity(companyId, HttpStatus.OK);
     }
 }

@@ -6,6 +6,11 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@SequenceGenerator(
+        name = "DECIMAL_SEQ_GENERATOR",
+        sequenceName = "DECIMAL_SEQ",
+        initialValue = 1000000000
+)
 public class CommercialBilling {
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DECIMAL_SEQ_GENERATOR")
     @Column(name = "billing_id", length = 10)
