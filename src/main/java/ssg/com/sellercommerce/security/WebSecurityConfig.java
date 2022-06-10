@@ -1,5 +1,5 @@
 package ssg.com.sellercommerce.security;
-
+/*
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,6 +20,8 @@ public class WebSecurityConfig {
                 .authorizeRequests(authorize -> authorize
                         .anyRequest().permitAll()
                 )
+                .authorizeRequests()
+
                 .cors(withDefaults());
         return http.build();
     }
@@ -28,11 +30,13 @@ public class WebSecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOriginPatterns(Arrays.asList("**"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+        configuration.setAllowedMethods(Arrays.asList("**"));
+        configuration.setAllowedHeaders(Arrays.asList("**"));
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
 }
+*/
