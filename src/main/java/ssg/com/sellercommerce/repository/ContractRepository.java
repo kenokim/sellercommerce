@@ -4,8 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ssg.com.sellercommerce.domain.Contract;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
-public interface ContractRepository extends JpaRepository<Contract, Long> {
+public interface ContractRepository extends JpaRepository<Contract, Long>, ContractRepositorySupp {
+    List<Contract> findAllByCompanyIdAndCurrentTime(Long companyId, LocalDateTime curr);
     Optional<Contract> findFirstByCompanyIdAndStartAtAndEndAt(Long companyId, LocalDateTime startAt, LocalDateTime endAt);
 }

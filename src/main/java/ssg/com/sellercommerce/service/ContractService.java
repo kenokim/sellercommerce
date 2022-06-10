@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ssg.com.sellercommerce.domain.Company;
 import ssg.com.sellercommerce.domain.Contract;
+import ssg.com.sellercommerce.exception.IllegalRequestException;
 import ssg.com.sellercommerce.repository.ContractRepository;
 
 import java.time.LocalDateTime;
@@ -33,7 +34,10 @@ public class ContractService {
     public Long createContract(Long companyId, LocalDateTime startAt, LocalDateTime endAt) {
         // 존재하는 업체여야 합니다
         Company company = companyService.findByIdOrThrow(companyId);
-
+        // 계약기간이 중복되지 않아야 합니다
+        if (!contractRepository.findAllByCompanyIdAndCurrentTime(companyId, startAt).isEmpty()) {
+            throw new IllegalRequestException("기간이 중복된 계약이 있습니다.");
+        }
         Contract contract = Contract.create(company, startAt, endAt);
         contractRepository.save(contract);
         return contract.getId();

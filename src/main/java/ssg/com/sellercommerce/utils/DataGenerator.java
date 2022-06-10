@@ -46,4 +46,8 @@ public class DataGenerator implements CommandLineRunner {
         Item item = Item.createItem(companyName, itemName, price, stockQuantity);
         itemRepository.save(item);
     }
+
+    private void saveCompany(String companyName, Long businessName, Long phoneNumber, String address) {
+
+    }
 }

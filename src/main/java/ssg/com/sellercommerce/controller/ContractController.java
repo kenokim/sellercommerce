@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ssg.com.sellercommerce.service.ContractService;
 import ssg.com.sellercommerce.web.ContractCreateDto;
 
 @Tag(name = "계약 DOMAIN")
@@ -17,9 +18,12 @@ import ssg.com.sellercommerce.web.ContractCreateDto;
 @RequestMapping("/contract")
 @RequiredArgsConstructor
 public class ContractController {
+    private final ContractService contractService;
+
     @Operation(summary = "계약생성")
     @PostMapping // 계약생성
-    public ResponseEntity createContract(ContractCreateDto contractCreateDto) {
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity createContract(ContractCreateDto dto) {
+        Long contractId = contractService.createContract(dto.getCompanyId());
+        return new ResponseEntity(contractId, HttpStatus.OK);
     }
 }
