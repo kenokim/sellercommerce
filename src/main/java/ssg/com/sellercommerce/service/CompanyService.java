@@ -8,6 +8,8 @@ import ssg.com.sellercommerce.domain.Company;
 import ssg.com.sellercommerce.exception.IllegalRequestException;
 import ssg.com.sellercommerce.repository.CompanyRepository;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -28,5 +30,9 @@ public class CompanyService {
 
     public Company findByIdOrThrow(Long companyId) {
         return companyRepository.findById(companyId).orElseThrow(() -> new IllegalRequestException("존재하지 않는 업체입니다."));
+    }
+
+    public List<Company> findAll() {
+        return companyRepository.findAll();
     }
 }

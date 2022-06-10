@@ -17,9 +17,7 @@ public class CompanyCreateDto {
 
     private String address;
 
-    public Long getPhoneNumber() {
-        return Long.parseLong(phoneNumber);
-    }
+    public Long getLongPhoneNumber() { return Long.parseLong(phoneNumber); }
 
     private CompanyCreateDto() {
 
