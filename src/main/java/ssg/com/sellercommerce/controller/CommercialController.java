@@ -1,5 +1,6 @@
 package ssg.com.sellercommerce.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,17 +22,20 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class CommercialController {
 
-    @PostMapping("{commercialId}") // 광고과금
+    @Operation(summary = "광고과금")
+    @PostMapping("{commercialId}")
     public ResponseEntity click(@PathVariable("commercialId") Long commercialId) {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping // 광고전시
+    @Operation(summary = "광고전시")
+    @GetMapping
     public ResponseEntity<CommercialDisplayDto> display() {
         return new ResponseEntity(CommercialDisplayDto.createByEntity(null), HttpStatus.OK);
     }
 
-    @PostMapping // 광고입찰
+    @Operation(summary = "광고입찰")
+    @PostMapping
     public ResponseEntity createBid(@Valid @RequestBody CommercialCreateDto commercialCreateDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new IllegalRequestException(bindingResult.getFieldError().getDefaultMessage());
