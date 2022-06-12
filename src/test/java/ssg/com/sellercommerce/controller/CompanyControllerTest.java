@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import ssg.com.sellercommerce.service.CompanyService;
 import ssg.com.sellercommerce.web.CompanyCreateDto;
@@ -20,6 +21,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 class CompanyControllerTest {
@@ -45,7 +47,7 @@ class CompanyControllerTest {
     @ParameterizedTest
     @ValueSource(longs = { 1000000000L, 3000000000L })
     public void CompanyCreate_ValidInput_ReturnsOK(Long businessNumber) throws Exception {
-        this.mockMvc.perform(post("/company")
+        this.mockMvc.perform(post("/companies")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(CompanyCreateDto.of(companyName, businessNumber, phoneNumber, address))))
                 .andExpect(status().isOk());
@@ -54,7 +56,7 @@ class CompanyControllerTest {
     @ParameterizedTest
     @ValueSource(strings = { "021234567", "01012345678" })
     public void CompanyCreate_ValidInput2_ReturnsOK(String phoneNumber) throws Exception {
-        this.mockMvc.perform(post("/company")
+        this.mockMvc.perform(post("/companies")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(CompanyCreateDto.of(companyName, businessNumber, phoneNumber, address))))
                 .andExpect(status().isOk());
@@ -64,7 +66,7 @@ class CompanyControllerTest {
     @ParameterizedTest
     @ValueSource(longs = { 10L, 10000000000L })
     public void CompanyCreate_InvalidBusinessNumber_ReturnsBadRequest(Long businessNumber) throws Exception {
-        this.mockMvc.perform(post("/company")
+        this.mockMvc.perform(post("/companies")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(CompanyCreateDto.of(companyName, businessNumber, phoneNumber, address))))
                 .andExpect(status().isBadRequest());
@@ -73,7 +75,7 @@ class CompanyControllerTest {
     @ParameterizedTest
     @ValueSource(strings = { "02123456", "010123456789" })
     public void CompanyCreate_InvalidPhoneNumber_ReturnsBadRequest(String phoneNumber) throws Exception {
-        this.mockMvc.perform(post("/company")
+        this.mockMvc.perform(post("/companies")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(CompanyCreateDto.of(companyName, businessNumber, phoneNumber, address))))
                 .andExpect(status().isBadRequest());

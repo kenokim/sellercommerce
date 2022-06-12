@@ -1,12 +1,28 @@
 package ssg.com.sellercommerce.utils;
 
+import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import ssg.com.sellercommerce.domain.Company;
 import ssg.com.sellercommerce.domain.Item;
+import ssg.com.sellercommerce.repository.CommercialBillingRepository;
+import ssg.com.sellercommerce.repository.CompanyRepository;
 import ssg.com.sellercommerce.repository.ItemRepository;
+import ssg.com.sellercommerce.repository.SettlementRepository;
+import ssg.com.sellercommerce.service.CommercialService;
+import ssg.com.sellercommerce.service.ContractService;
+import ssg.com.sellercommerce.service.SettlementService;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+/**
+ * 테스트 데이터 생성 클래스
+ */
+@Profile("!test")
 @Component
 @Transactional
 @RequiredArgsConstructor
@@ -14,9 +30,26 @@ public class DataGenerator implements CommandLineRunner {
 
     private final ItemRepository itemRepository;
 
+    private final CompanyRepository companyRepository;
+
+    private final ContractService contractService;
+
+    private final CommercialService commercialService;
+
+    private final SettlementRepository settlementRepository;
+
+    private final CommercialBillingRepository commercialBillingRepository;
+
+    private final SettlementService settlementService;
+
     @Override
     public void run(String... args) throws Exception {
         generateItems();
+        generateCompanies();
+        generateContracts();
+        generateCommercials();
+        generateBillings();
+        settlementService.processSettlements(LocalDateTime.now().minusHours(1), LocalDateTime.now());
     }
 
     private void generateItems() {
@@ -42,12 +75,42 @@ public class DataGenerator implements CommandLineRunner {
 
     }
 
+    private void generateCompanies() {
+        saveCompany("이상해씨샵", 1000000000L, 1234567L, "hello");
+        saveCompany("이마트", 1000000000L, 1234567L, "hello");
+        saveCompany("신세계백화점", 1000000000L, 1234567L, "hello");
+    }
+
     private void saveItem(String companyName, String itemName, int price, int stockQuantity) {
         Item item = Item.createItem(companyName, itemName, price, stockQuantity);
         itemRepository.save(item);
     }
 
     private void saveCompany(String companyName, Long businessName, Long phoneNumber, String address) {
+        Company company = Company.create(companyName, businessName, phoneNumber, address);
+        companyRepository.save(company);
+    }
 
+    private void generateContracts() {
+        contractService.createContract(1000000051L);
+        contractService.createContract(1000000052L);
+        contractService.createContract(1000000053L);
+
+    }
+
+    private void generateCommercials() {
+        commercialService.createCommercial(1000000053L, 1000000001L, 10000);
+        commercialService.createCommercial(1000000053L, 1000000004L, 15000);
+        commercialService.createCommercial(1000000053L, 1000000006L, 20000);
+        commercialService.createCommercial(1000000052L, 1000000008L, 25000);
+    }
+
+    private void generateBillings() {
+        for (int i = 0; i < 11; i++) {
+            commercialService.clickBilling(1000000151L);
+        }
+        for (int i = 0; i < 11; i++) {
+            commercialService.clickBilling(1000000151L, LocalDateTime.now().minusDays(1));
+        }
     }
 }

@@ -13,7 +13,7 @@ public class PhoneNumberValidator implements ConstraintValidator<PhoneNumberCons
         try {
             long number = Long.parseLong(value);
             // 02-123-4567 ~ 010-1234-5678
-            return number > 100000000L && number < 1000000000L;
+            return number > 20000000L && number < 2000000000L;
         } catch (Exception e) {
             return false;
         }

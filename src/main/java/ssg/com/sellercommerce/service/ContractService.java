@@ -52,4 +52,8 @@ public class ContractService {
         LocalDateTime now = LocalDateTime.now();
         return findByCompanyIdWhereContractTermValid(companyId, now);
     }
+
+    public List<Contract> findAll() {
+        return contractRepository.findAll();
+    }
 }

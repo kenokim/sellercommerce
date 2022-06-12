@@ -14,6 +14,5 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     List<Item> findAllByCompanyName(String companyName);
 
-    @Query("select i from Item as i")
-    Optional<Item> findByItemId(Long itemId);
+    Optional<Item> findById(Long id);
 }

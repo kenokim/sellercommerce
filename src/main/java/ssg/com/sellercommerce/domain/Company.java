@@ -36,4 +36,10 @@ public class Company {
         company.address = address;
         return company;
     }
+
+    public void update(Long businessNumber, Long phoneNumber, String address) {
+        this.businessNumber = businessNumber;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+    }
 }

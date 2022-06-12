@@ -16,10 +16,6 @@ public class Item {
     @Column(name = "item_id", length = 10)
     private Long id;
 
-    //@ManyToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "company_name")
-    //private Company company;
-
     @NotNull
     private String companyName;
 
@@ -29,6 +25,8 @@ public class Item {
     private int price;
 
     private int stockQuantity;
+
+    protected Item() {}
 
     public static Item createItem(String companyName, String itemName, int price, int stockQuantity) {
         Item item = new Item();

@@ -10,11 +10,16 @@ import java.util.List;
 public class CommercialDisplayDto {
     private List<CommercialDto> commercialDtoList = new ArrayList<>();
 
-    public static CommercialDisplayDto createByEntity(Commercial commercial) {
-        return new CommercialDisplayDto();
+    public static CommercialDisplayDto createByEntity(List<Commercial> commercials) {
+        CommercialDisplayDto dto = new CommercialDisplayDto();
+        commercials.stream().forEach(c -> {
+            dto.commercialDtoList.add(CommercialDto.createByEntity(c));
+        });
+        return dto;
     }
 }
 
+@Data
 class CommercialDto {
     private Long commercialId;
     private Long companyId;
@@ -22,4 +27,15 @@ class CommercialDto {
     private String itemName;
     private Integer itemPrice;
     private Integer bid;
+
+    public static CommercialDto createByEntity(Commercial commercial) {
+        CommercialDto dto = new CommercialDto();
+        dto.commercialId = commercial.getId();
+        dto.companyId = commercial.getCompany().getId();
+        dto.bid = commercial.getBid();
+        dto.itemName = commercial.getItem().getItemName();
+        dto.itemId = commercial.getItem().getId();
+        dto.itemPrice = commercial.getItem().getPrice();
+        return dto;
+    }
 }
