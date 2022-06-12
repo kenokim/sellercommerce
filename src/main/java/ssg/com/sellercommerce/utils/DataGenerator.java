@@ -68,15 +68,15 @@ public class DataGenerator implements CommandLineRunner {
         saveItem("스타벅스", "아쿠아 머그", 23000, 7);
         saveItem("삼성전자", "삼성전자 43 인치 스마트모니터", 480000, 2);
         saveItem("나이키", "나이키 헤리티지 스우시 캡", 25000, 5);
-        saveItem("이상해씨샵", "이상해씨 인형", 15000, 4);
-        saveItem("이상해씨샵", "이상해씨 덩쿨", 5000, 4);
-        saveItem("이상해씨샵", "이상해씨 캐릭터 굿즈", 35000, 8);
-        saveItem("이상해씨샵", "이상해씨 귀여운 인형", 25000, 3);
+        saveItem("신세계몰", "유세린 수분크림", 8415, 3);
+        saveItem("신세계몰", "AU테크 전기자전거", 439000, 4);
+        saveItem("신세계몰", "코디 티슈", 20800, 8);
+        saveItem("신세계몰", "올리비아데코 이불", 17750, 3);
 
     }
 
     private void generateCompanies() {
-        saveCompany("이상해씨샵", 1000000000L, 1234567L, "hello");
+        saveCompany("신세계몰", 1000000000L, 215773419L, "서울특별시 종로구 우정국로 26 ");
         saveCompany("이마트", 1000000000L, 1234567L, "hello");
         saveCompany("신세계백화점", 1000000000L, 1234567L, "hello");
     }
