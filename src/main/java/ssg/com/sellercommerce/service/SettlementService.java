@@ -27,6 +27,7 @@ public class SettlementService {
     private final CompanyRepository companyRepository;
     private final ItemRepository itemRepository;
 
+    private final CompanyService companyService;
 
     public List<Settlement> findAll() {
         return settlementRepository.findAll();
@@ -43,8 +44,8 @@ public class SettlementService {
         for (Commercial commercial : commercials) {
             try {
                 log.info("ID: {} 광고의 정산을 시작합니다.", commercial.getId());
-                Optional<Company> company = companyRepository.findById(commercial.getCompany().getId());
-                Optional<Item> item = itemRepository.findById(commercial.getItem().getId());
+                Company company = commercial.getCompany();
+                Item item = commercial.getItem();
                 Tuple t = commercialBillingRepository.aggregateSettlements(commercial.getId(), from, to);
                 Long clickCount = t.get(0, Long.class);
                 Integer totalBilling = t.get(1, Integer.class);
@@ -53,9 +54,9 @@ public class SettlementService {
                 }
                 Settlement settlement = Settlement
                         .builder()
-                        .company(company.get())
+                        .company(company)
                         .commercial(commercial)
-                        .item(item.get())
+                        .item(item)
                         .clickCount(clickCount)
                         .clickDate(LocalDateTime.now())
                         .totalBilling(totalBilling)

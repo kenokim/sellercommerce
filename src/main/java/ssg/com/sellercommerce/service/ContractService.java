@@ -45,7 +45,7 @@ public class ContractService {
     }
 
     public List<Contract> findByCompanyIdWhereContractTermValid(Long companyId, LocalDateTime now) {
-        return contractRepository.findAllByCompanyIdAndStartAtBeforeNowAndEndAtAfterNow(companyId, now);
+        return contractRepository.findAllByCompanyIdAndCurrentTime(companyId, now);
     }
 
     public List<Contract> findByCompanyIdWhereContractTermValid(Long companyId) {

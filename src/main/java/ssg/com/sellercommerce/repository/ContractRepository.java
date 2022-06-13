@@ -11,7 +11,4 @@ import java.util.Optional;
 public interface ContractRepository extends JpaRepository<Contract, Long>, ContractRepositorySupp {
     List<Contract> findAllByCompanyIdAndCurrentTime(Long companyId, LocalDateTime curr);
     Optional<Contract> findFirstByCompanyIdAndStartAtAndEndAt(Long companyId, LocalDateTime startAt, LocalDateTime endAt);
-
-    @Query("select c from Contract as c")
-    List<Contract> findAllByCompanyIdAndStartAtBeforeNowAndEndAtAfterNow(Long companyId, LocalDateTime now);
 }

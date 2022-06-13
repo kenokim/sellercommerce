@@ -27,6 +27,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 class CommercialControllerTest {
+    /**
+     * Controller 검증 로직 테스트
+     */
 
     @Autowired private CommercialController commercialController;
     @Autowired private MockMvc mockMvc;

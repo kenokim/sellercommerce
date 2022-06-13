@@ -55,8 +55,6 @@ public class ContractServiceTest {
         this.companyId = company.getId();
         Contract contract = Contract.create(company, startAt, endAt);
         contractRepository.save(contract);
-        when(contractService.createContract(companyId))
-                .thenReturn(contractId);
     }
 
     @Test
@@ -74,7 +72,7 @@ public class ContractServiceTest {
 
     @Test
     public void FindByContractTerm_Empty() {
-        LocalDateTime now = startAt.minusYears(1);
+        LocalDateTime now = startAt.minusYears(2);
         List<Contract> contracts = contractService.findByCompanyIdWhereContractTermValid(companyId, now);
         assertThat(contracts.size()).isEqualTo(0);
     }

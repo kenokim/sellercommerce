@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,10 +14,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import ssg.com.sellercommerce.domain.Company;
 import ssg.com.sellercommerce.service.CompanyService;
 import ssg.com.sellercommerce.web.CompanyCreateDto;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -25,6 +29,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 class CompanyControllerTest {
+    /**
+     * Controller 검증 로직 테스트
+     */
     @Autowired private CompanyController companyController;
     @Autowired private MockMvc mockMvc;
     @Autowired private ObjectMapper objectMapper;
@@ -35,13 +42,18 @@ class CompanyControllerTest {
     private final Long businessNumber = 1000000000L;
     private final String companyName = "hello";
     private final String phoneNumber = "01012345678";
+
+    private final Long longPhoneNumber = 1012345678L;
     private final String address = "Hello";
 
 
     @BeforeEach
     public void setup() {
-        when(companyService.register(companyName, businessNumber, Long.parseLong(phoneNumber), address))
+        Company company = Company.create(companyName, businessNumber, longPhoneNumber, address);
+        when(companyService.register(companyName, businessNumber, longPhoneNumber, address))
                 .thenReturn(companyId);
+        when(companyService.registerAndReturnEntity(anyString(), anyLong(), anyLong(), anyString()))
+                .thenReturn(company);
     }
 
     @ParameterizedTest

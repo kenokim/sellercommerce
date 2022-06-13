@@ -27,4 +27,5 @@ public class ContractRepositorySuppImpl implements ContractRepositorySupp {
         q.where(contract.endAt.after(curr));
         return q.fetch();
     }
+
 }

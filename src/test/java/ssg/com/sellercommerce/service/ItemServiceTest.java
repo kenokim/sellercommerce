@@ -21,8 +21,8 @@ class ItemServiceTest {
 
     @Autowired private ItemRepository itemRepository;
 
-    private final String companyName = "이상해씨샵";
-    private final String itemName = "벌레 이상해씨";
+    private final String companyName = "신세계몰";
+    private final String itemName = "굿즈";
     private final Integer price = 1000000;
     private final Integer stockQuantity = 1;
 
@@ -39,6 +39,6 @@ class ItemServiceTest {
 
     @Test
     public void FindByCompanyName_Fail() {
-        assertThat(itemService.isValidCompanyName("이상세계백화점")).isFalse();
+        assertThat(itemService.isValidCompanyName("신세계백화점")).isFalse();
     }
 }

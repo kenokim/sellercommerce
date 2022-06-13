@@ -20,7 +20,7 @@ class CompanyServiceTest {
 
     @Autowired private CompanyService companyService;
 
-    private final String companyName = "이상해씨샵";
+    private final String companyName = "신세계몰";
     private final Long businessNumber = 1000000000L;
     private final Long phoneNumber = 1012345678L;
     private final String address = "hello";
@@ -29,7 +29,7 @@ class CompanyServiceTest {
     public void CreateCompany_Success() {
         when(itemService.isValidCompanyName(companyName))
                 .thenReturn(true);
-        assertThat(companyService.register(companyName, businessNumber, phoneNumber, address)).isGreaterThan(1000000000L).isNotNull();
+        assertThat(companyService.register(companyName, businessNumber, phoneNumber, address)).isGreaterThanOrEqualTo(1000000000L).isNotNull();
     }
 
     @Test

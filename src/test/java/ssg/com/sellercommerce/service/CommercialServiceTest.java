@@ -32,13 +32,13 @@ class CommercialServiceTest {
     @MockBean private ItemService itemService;
     @MockBean private ContractService contractService;
 
-    private final String companyName = "이상해씨샵";
+    private final String companyName = "신세계몰";
     private final Long businessNumber = 1000000000L;
     private final Long phoneNumber = 1012345678L;
     private final String address = "hello";
     private final Long companyId = 1000000000L;
-    private final String itemName = "벌레 이상해씨";
-    private final String itemName2 = "이상한 이상해씨";
+    private final String itemName = "씨앗";
+    private final String itemName2 = "오염된 씨앗";
     private final Integer price = 1000000;
     private final Integer price2 = 10000;
     private final Integer stockQuantity = 1;
@@ -96,40 +96,6 @@ class CommercialServiceTest {
         });
     }
 
-    public void createCommercials() {
-        commercialService.createCommercial(companyId, itemId, 25000);
-        commercialService.createCommercial(companyId, itemId, 15000);
-        commercialService.createCommercial(companyId, itemId, 35000);
-        commercialService.createCommercial(companyId, itemId2, 45000);
-        commercialService.createCommercial(companyId, itemId, 500);
-    }
-    @Test
-    public void CommercialDisplay_Below_3 () {
-        //commercialService.createCommercial(companyId, itemId, 25000);
-        //commercialService.createCommercial(companyId, itemId, 15000);
-        //commercialService.createCommercial(companyId, itemId, 35000);
-        //commercialService.createCommercial(companyId, itemId2, 45000);
-        createCommercials();
-
-        List<Commercial> commercials = commercialService.displayCommercials(3);
-        assertThat(commercials.size()).isEqualTo(3);
-
-    }
-
-    @Test
-    public void CommercialDisplay_DescByBid() {
-        commercialService.createCommercial(companyId, itemId, 25000);
-        commercialService.createCommercial(companyId, itemId, 15000);
-        commercialService.createCommercial(companyId, itemId, 500);
-        commercialService.createCommercial(companyId, itemId, 35000);
-
-        List<Commercial> commercials = commercialService.displayCommercials(3);
-        commercials.stream().forEach(c -> {
-            if (c.getBid().equals(500)) {
-                fail();
-            }
-        });
-    }
 }
 
 
