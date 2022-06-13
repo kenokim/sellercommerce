@@ -40,6 +40,7 @@ public class SettlementService {
      */
     @Transactional
     public void processSettlements(LocalDateTime from, LocalDateTime to) {
+        log.info("정산 작업을 시작합니다.");
         List<Commercial> commercials = commercialRepository.findAll();
         for (Commercial commercial : commercials) {
             try {
