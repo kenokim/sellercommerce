@@ -1,6 +1,19 @@
 ### API Documentation - swagger
 http://localhost:8080/swagger-ui/index.html
 
+
+# 실행 방법
+(ubuntu) ./gradlew build -x test && java -jar ./build/libs/sellercommerce-0.0.1-SNAPSHOT.jar
+<br>
+(브라우저) http://localhost:8080/swagger-ui/index.html
+<br>
+
+
+
+
+
+
+
 ### Batch
 H2 DB 를 사용할 경우, Batch table 이 자동으로 생성됩니다.
 

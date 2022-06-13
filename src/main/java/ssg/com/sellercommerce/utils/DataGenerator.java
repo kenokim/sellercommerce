@@ -49,7 +49,6 @@ public class DataGenerator implements CommandLineRunner {
         generateContracts();
         generateCommercials();
         generateBillings();
-        settlementService.processSettlements(LocalDateTime.now().minusHours(1), LocalDateTime.now());
     }
 
     private void generateItems() {
